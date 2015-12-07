@@ -52,15 +52,25 @@ wr=re.findall(r"streams\/([\S]{2,20}?)\"",html)
 #xr=re.findall(r"(href\>[\S]+\<\/a\>)",html)
 #print wr
 
-idx=0
-xs=""
-for strim in wr:
-	xs += "[{0}]:{1} ".format(idx,strim) 
-	idx+=1
-print xs
+status=re.findall(r"status\"\:([\s\S]+?)\,",html)
+
+def menu():
+	idx=0
+	xs=""
+	#for strim in wr:
+	while(idx<len(status) and idx < 5):
+		xs += "[{0}]:{1} .. {2} \n".format(idx,wr[idx],status[idx]) 
+	
+		#xs += "[{0}]:{1} \n".format(idx,status[idx]) 
+		idx+=1
+	print xs
+
 cmd="livestreamer twitch.tv/"
 res="low"
 
-ch = input('choose stream :')
-
-os.system(cmd+wr[ch]+" "+res)
+#input choice
+#execute
+while(1):
+	menu()
+	ch = input('choose stream :')
+	os.system(cmd+wr[ch]+" "+res)
